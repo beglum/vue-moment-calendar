@@ -66,15 +66,8 @@ export default /*#__PURE__*/ {
     uppercaseWeekDays() {
       return moment.weekdays(true).map((name) => name.toUpperCase());
     },
-    // Порядковый номер текущего месяца
-    currentMonthNumber() {
-      return this.chosenMonth.month();
-    },
     isCurrentYear() {
       return this.chosenMonth.isSame(this.initialDate, 'year');
-    },
-    currentMonth() {
-      return this.chosenMonth;
     },
     previousMonth() {
       return this.chosenMonth.clone().subtract(1, 'M');
@@ -83,9 +76,9 @@ export default /*#__PURE__*/ {
       return this.chosenMonth.clone().add(1, 'M');
     },
     titleCurrentMonth() {
-      let title = this.currentMonth.format('MMMM').toUpperCase();
+      let title = this.chosenMonth.format('MMMM').toUpperCase();
       if (!this.isCurrentYear) {
-        title += ` ${this.currentMonth.year()}`;
+        title += ` ${this.chosenMonth.year()}`;
       }
 
       return title;
@@ -105,7 +98,7 @@ export default /*#__PURE__*/ {
       let eventsListByKey = {};
       this.events.forEach((event) => {
         const dateObject = this.getMomentObjectByDateString(event.date);
-        if (dateObject.year() === this.currentMonth.year()) {
+        if (dateObject.year() === this.chosenMonth.year()) {
           const hours = dateObject.hour().toString().padStart(2, '0');
           const minutes = dateObject.minute().toString().padStart(2, '0');
           const data = {
@@ -128,14 +121,15 @@ export default /*#__PURE__*/ {
       return eventsListByKey;
     },
 
+    // Дни, отображаемые на текущей странице календаря
     displayedDaysOfCurrentCalendarPage() {
-      let currentMonth = this.currentMonth;
+      let currentMonth = this.chosenMonth;
       let daysFromPreviousMonth = this.weekDayOfStartsCurrentMonth - 1;
       let daysFromNextMonth = 7 - this.weekDayOfEndsCurrentMonth;
 
       let events = [];
 
-      // Сначала заполняем недостающие дни из прошлым месяцем
+      // Сначала заполняем недостающие дни из прошлого месяця
       for (let i = daysFromPreviousMonth - 1; i >= 0; i--) {
         let dateString = this.generateDateStringByAttrsList([
           this.previousMonth.daysInMonth() - i,
@@ -151,7 +145,7 @@ export default /*#__PURE__*/ {
       for (let dayNum = 1; dayNum <= currentMonth.daysInMonth(); dayNum++) {
         let dateString = this.generateDateStringByAttrsList([
           dayNum,
-          this.currentMonthNumber + 1,
+          this.chosenMonth.month() + 1,
           this.chosenMonth.year(),
         ]);
         let data = this.generateDayObject(dateString);
@@ -189,7 +183,6 @@ export default /*#__PURE__*/ {
       return {
         date: dateObject,
         events: this.getEventsByKey(dateString),
-        weekDay: +dateObject.format('E'),
         isWeekend: +dateObject.format('E') > 5,
         isToday: this.initialDate.isSame(dateObject, 'day'),
         isPreviousDay: this.initialDate.isAfter(dateObject, 'day'),
