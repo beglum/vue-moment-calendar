@@ -1,5 +1,5 @@
 {
-  "name": "@beglum/vue-moment-calendar",
+  "name": "vue-moment-calendar",
   "version": "1.0.1",
   "main": "dist/vue-moment-calendar.ssr.js",
   "browser": "dist/vue-moment-calendar.esm.js",
