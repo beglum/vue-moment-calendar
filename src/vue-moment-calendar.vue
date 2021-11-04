@@ -5,11 +5,11 @@
       <span class="current-month-name bold">{{ titleCurrentMonth }}</span>
       <button class="button" @click="toNextMonth">&rsaquo;</button>
     </div>
-    <div class="week-names bold">
+    <div class="week-names">
       <div
         v-for="(weekName, index) of uppercaseWeekDays"
         :key="index"
-        class="week-name"
+        class="week-name bold"
         :class="{
           weekend: index >= 5,
         }"
@@ -205,7 +205,7 @@ export default /*#__PURE__*/ {
   created() {
     moment.locale(this.lang);
     this.chosenMonth = moment().locale(this.lang);
-    this.initialDate = moment().locale(this.lang);
+    this.initialDate = this.chosenMonth.clone();
   },
 };
 </script>
@@ -227,12 +227,16 @@ $bage-green-color: #86b792;
 $bage-orange-bg: #fcebce;
 $bage-orange-color: #bd9f6f;
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 * {
   box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
 }
 
 .bold {
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .navigation {
@@ -253,7 +257,7 @@ $bage-orange-color: #bd9f6f;
 
 .week-name {
   text-align: right;
-  font-size: 0.8em;
+  font-size: 0.85em;
   &.weekend {
     color: $weekend-week-name;
   }
