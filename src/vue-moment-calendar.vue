@@ -51,8 +51,8 @@ import moment from 'moment';
 export default /*#__PURE__*/ {
   name: 'VueMomentCalendar', // vue component name
   data: () => ({
-    chosenMonth: moment(),
-    initialDate: moment(),
+    chosenMonth: null,
+    initialDate: null,
   }),
   props: {
     events: Array,
@@ -204,6 +204,8 @@ export default /*#__PURE__*/ {
   },
   created() {
     moment.locale(this.lang);
+    this.chosenMonth = moment().locale(this.lang);
+    this.initialDate = moment().locale(this.lang);
   },
 };
 </script>

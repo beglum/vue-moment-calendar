@@ -1,6 +1,6 @@
 {
   "name": "@beglum/vue-moment-calendar",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/vue-moment-calendar.ssr.js",
   "browser": "dist/vue-moment-calendar.esm.js",
   "module": "dist/vue-moment-calendar.esm.js",
